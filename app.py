@@ -2,7 +2,7 @@ import os
 
 from dotenv import load_dotenv
 import streamlit as st
-from langchain_community.document_loaders import UnstructuredPDFLoader
+from langchain_community.document_loaders import PyPDFLoader
 from langchain_text_splitters.character import CharacterTextSplitter
 from langchain_community.vectorstores import FAISS
 from langchain_community.embeddings import HuggingFaceEmbeddings
@@ -19,7 +19,7 @@ working_dir = os.path.dirname(os.path.abspath(__file__))
 def main():
     def load_document(file_path):
         """This function load the pdf file and return the text from it."""
-        loader = UnstructuredPDFLoader(file_path)
+        loader = PyPDFLoader(file_path)
         documents = loader.load()
         return documents
 

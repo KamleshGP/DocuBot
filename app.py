@@ -87,6 +87,9 @@ def main():
     if "chat_history" not in st.session_state:
         st.session_state.chat_history = []
 
+    if "last_uploaded_file" not in st.session_state:
+        st.session_state.last_uploaded_file = None
+
     #file upload option
     uploaded_file = st.file_uploader(label="Upload your pdf file", type=["pdf"])
 
@@ -95,11 +98,18 @@ def main():
         with open(file_path, "wb") as f:
             f.write(uploaded_file.getbuffer())
 
+        if st.session_state.last_uploaded_file != uploaded_file.name:
+            st.session_state.last_uploaded_file = uploaded_file.name
+            st.session_state.chat_history = []  # reset history
+            st.session_state.vectorstore = None
+            st.session_state.conversation_chain = None
 
-        if "vectorstore" not in st.session_state:
+
+        if "vectorstore" not in st.session_state or st.session_state.vectorstore is None:
             st.session_state.vectorstore = setup_vectorstore(load_document(file_path))
 
-        if "conversation_chain" not in st.session_state:
+        
+        if "conversation_chain" not in st.session_state or st.session_state.conversation_chain is None:
             st.session_state.conversation_chain = create_chain(st.session_state.vectorstore, model_name)
 
     for message in st.session_state.chat_history:

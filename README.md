@@ -14,7 +14,7 @@ This Streamlit application allows you to chat with the content of your PDF docum
 
 You can try out the live application on Streamlit Cloud here:
 
-👉 [Try DocuBot Now](https://your-streamlit-app-url.streamlit.app)
+👉 [Try DocuBot Now](https://docubot-ai.streamlit.app/)
 
 
 ## ⚙️ Setup and Installation (for local development)
